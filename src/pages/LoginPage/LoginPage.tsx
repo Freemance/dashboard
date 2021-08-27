@@ -98,6 +98,13 @@ const LoginPage = () => {
     }));
   };
 
+  const toggleChecked = () => {
+    setState((state) => ({
+      ...state,
+      checked: !state.checked,
+    }));
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -153,9 +160,9 @@ const LoginPage = () => {
             className={classes.checkbox}
             control={
               <Checkbox
-                // checked={state.checkedB}
-                // onChange={handleChange}
-                name="checkedB"
+                checked={state.checked}
+                onClick={toggleChecked}
+                name="rememberMe"
                 color="primary"
               />
             }
