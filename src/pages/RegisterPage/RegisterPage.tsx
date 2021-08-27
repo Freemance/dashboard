@@ -84,12 +84,23 @@ const RegisterPage = () => {
     email: '',
     password: '',
   });
+  const [state, setState] = useState({
+    passwordVisible: false,
+  });
+
   const classes = useStyles();
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormValues((state) => ({
       ...state,
       [name]: value,
+    }));
+  };
+
+  const toggleVisibility = () => {
+    setState((state) => ({
+      ...state,
+      passwordVisible: !state.passwordVisible,
     }));
   };
 
@@ -137,7 +148,7 @@ const RegisterPage = () => {
               required
               fullWidth
               name="password"
-              type="password"
+              type={state.passwordVisible ? 'text' : 'password'}
               id="password"
               placeholder="Enter your password"
               autoComplete="current-password"
@@ -148,8 +159,9 @@ const RegisterPage = () => {
                   <IconButton
                     aria-label="toggle password visibility"
                     edge="end"
+                    onClick={toggleVisibility}
                   >
-                    {true ? <Visibility /> : <VisibilityOff />}
+                    {state.passwordVisible ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }
