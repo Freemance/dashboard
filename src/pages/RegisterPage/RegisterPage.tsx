@@ -86,6 +86,7 @@ const RegisterPage = () => {
   });
   const [state, setState] = useState({
     passwordVisible: false,
+    checked: false,
   });
 
   const classes = useStyles();
@@ -101,6 +102,13 @@ const RegisterPage = () => {
     setState((state) => ({
       ...state,
       passwordVisible: !state.passwordVisible,
+    }));
+  };
+
+  const toggleChecked = () => {
+    setState((state) => ({
+      ...state,
+      checked: !state.checked,
     }));
   };
 
@@ -171,9 +179,9 @@ const RegisterPage = () => {
             className={classes.checkbox}
             control={
               <Checkbox
-                // checked={state.checkedB}
-                // onChange={handleChange}
-                name="checkedB"
+                checked={state.checked}
+                onClick={toggleChecked}
+                name="checkbox"
                 color="primary"
               />
             }
