@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RegisterPage = () => {
   const [formValues, setFormValues] = useState({
+    username: '',
     email: '',
     password: '',
   });
@@ -109,7 +110,7 @@ const RegisterPage = () => {
               autoComplete="username"
               placeholder="Enter your username"
               autoFocus
-              value={formValues.email}
+              value={formValues.username}
               onChange={handleInput}
             />
           </div>
