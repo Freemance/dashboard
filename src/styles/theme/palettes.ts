@@ -64,8 +64,8 @@ export const lightPalette = {
     boxShadow: '0 8px 3px 1px #ea5455',
   },
   text: {
-    primary: '#122744',
-    secondary: '#414ca5',
+    primary: '#6e6b7b',
+    secondary: '#a6a4b0',
   },
   background: {
     default: '#F7FBFE',
@@ -141,18 +141,18 @@ export const darkPalette = {
     boxShadow: '0 8px 3px 1px #ea5455',
   },
   text: {
-    primary: '#122744',
-    secondary: '#414ca5',
+    primary: '#d0d2d6',
+    secondary: '#EEEEEE',
   },
   background: {
-    default: '#F7FBFE',
-    paper: white,
+    default: '#161d31',
+    paper: '#283046',
     gradient:
-      'linear-gradient(90deg, hsla(206, 78%, 98%, 1) 0%, hsla(204, 87%, 94%, 1) 0.2%, hsla(208, 88%, 97%, 1) 0.4%, hsla(200, 86%, 97%, 1) 0.6%, hsla(206, 78%, 98%, 1) 0.8%)',
+      'linear-gradient(180deg,hsla(224,38%,14%,.94) 44%,hsla(224,38%,14%,.46) 73%,hsla(0,0%,14%,0))',
   },
   shadows: {
     card: '0 4px 24px 0 rgb(34 41 47 / 10%)',
   },
-  icon: colors.blueGrey[600],
-  divider: colors.grey[200],
+  icon: white,
+  divider: colors.blueGrey[900],
 };
