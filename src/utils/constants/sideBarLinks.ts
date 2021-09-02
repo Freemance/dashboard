@@ -1,7 +1,7 @@
 import { ISideBarLink } from '../types';
 
 // Icons
-import { Grid, Users, Shield, Settings } from 'react-feather';
+import { Grid, Users, UserCheck, Settings } from 'react-feather';
 
 export const PAGES: ISideBarLink[] = [
   {
@@ -15,13 +15,13 @@ export const PAGES: ISideBarLink[] = [
     icon: Users,
   },
   {
-    title: 'Freemancer',
-    href: '/policys',
-    icon: Shield,
+    title: 'Freemancers',
+    href: '/freemancers',
+    icon: UserCheck,
   },
   {
     title: 'Settings',
-    href: '/companys',
+    href: '/settings',
     icon: Settings,
   },
 ];

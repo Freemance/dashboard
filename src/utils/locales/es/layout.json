@@ -1,3 +1,10 @@
 {
-  "dashboard": "Panel de Control"
+  "translation": {
+    "sidebar": {
+      "Dashboard": "Panel",
+      "Clients": "Clientes",
+      "Freemancers": "Freemancers",
+      "Settings": "Configuración"
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import * as React from 'react';
-// import { withRouter } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+
+// MUI components
+import { Container, Typography } from '@material-ui/core';
 
 // Types
 import { IProps } from './type';
@@ -12,11 +13,11 @@ const Dashboard: React.FC<IProps> = () => {
   const classes = useDashboardStyles();
 
   return (
-    <div className={classes.root}>
+    <Container className={classes.root}>
       <Typography variant="h1" color="primary">
         Dasboard
       </Typography>
-    </div>
+    </Container>
   );
 };
 

@@ -8,6 +8,7 @@ import MainLayout from 'src/components/layout/MainLayout';
 
 // Views
 import Dashboard from 'src/views/Dashboard';
+import Freemancers from './views/Freemancers';
 import NotFound from 'src/views/NotFound';
 
 const Routes = () => (
@@ -18,6 +19,12 @@ const Routes = () => (
       exact
       layout={MainLayout}
       path="/dashboard"
+    />
+    <RouteWithLayout
+      component={Freemancers}
+      exact
+      layout={MainLayout}
+      path="/freemancers"
     />
     <RouteWithLayout
       component={NotFound}

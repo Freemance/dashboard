@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 // MUI Components
 import { List, ListItem, Button } from '@material-ui/core';
@@ -14,6 +15,7 @@ import useSideBarNavStyles from './SideBarNav.style';
 
 // Types
 import { IProps } from './type';
+import { ISideBarLink } from 'src/utils/types';
 
 const SideBarNav: React.FC<IProps> = ({
   pages,
@@ -21,21 +23,21 @@ const SideBarNav: React.FC<IProps> = ({
   ...rest
 }: IProps) => {
   const classes = useSideBarNavStyles();
-
+  const { t } = useTranslation('layout', { useSuspense: false });
   return (
     <List {...rest} className={clsx(classes.root, className)}>
-      {pages.map((page) => (
-        <ListItem className={classes.item} disableGutters key={page.title}>
+      {pages.map(({ title, icon, href }: ISideBarLink) => (
+        <ListItem className={classes.item} disableGutters key={title}>
           <Button
             activeClassName={classes.active}
             className={classes.button}
             component={NavLink}
-            to={page.href}
+            to={href}
           >
             <div className={classes.icon}>
-              <WrappIcon icon={page.icon} />
+              <WrappIcon icon={icon} />
             </div>
-            {page.title}
+            {t`translation.sidebar.${title}`}
           </Button>
         </ListItem>
       ))}
