@@ -11,6 +11,16 @@ const useUserMenuStyles = makeStyles((theme: Theme) =>
         strokeWidth: 2,
       },
     },
+    itemText: {
+      '& .MuiListItemText-primary': {
+        color: theme.palette.text.primary,
+        textTransform: 'capitalize',
+      },
+      '& .MuiListItemText-secondary': {
+        color: theme.palette.text.secondary,
+        textTransform: 'capitalize',
+      },
+    },
     menu: {
       width: '12rem',
     },

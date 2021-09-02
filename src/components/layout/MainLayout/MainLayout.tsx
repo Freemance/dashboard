@@ -3,11 +3,10 @@ import clsx from 'clsx';
 import { useTheme, Theme } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
 
-// import { Sidebar, Topbar, Footer } from '@components';
 // Orgaisms
 import Topbar from 'src/components/organisms/Topbar';
 import Footer from 'src/components/organisms/Footer';
-
+import SideBar from 'src/components/organisms/SideBar/SideBar';
 // Styles
 import useStyles from './MainLayout.style';
 
@@ -21,7 +20,7 @@ const MainLayout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
     defaultMatches: true,
   });
 
-  /* const [openSidebar, setOpenSidebar] = React.useState<boolean>(false);
+  const [openSidebar, setOpenSidebar] = React.useState<boolean>(false);
 
   const handleSidebarOpen = () => {
     setOpenSidebar(true);
@@ -32,7 +31,7 @@ const MainLayout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
   };
 
   const shouldOpenSidebar: boolean = isDesktop ? true : openSidebar;
-*/
+
   return (
     <div
       className={clsx({
@@ -40,15 +39,13 @@ const MainLayout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
         [classes.shiftContent]: isDesktop,
       })}
     >
-      <Topbar
-      // onSidebarOpen={handleSidebarOpen}
-      />
+      <Topbar onSidebarOpen={handleSidebarOpen} />
       <div className={classes.headerNavbarShadow} />
-      {/* <Sidebar
+      <SideBar
         onClose={handleSidebarClose}
         open={shouldOpenSidebar}
         variant={isDesktop ? 'persistent' : 'temporary'}
-      /> */}
+      />
 
       <main className={classes.content}>
         {children}

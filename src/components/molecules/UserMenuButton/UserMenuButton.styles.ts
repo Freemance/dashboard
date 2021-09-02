@@ -1,6 +1,7 @@
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { ITheme } from 'src/utils/types';
 
-const useUserMenuButtonStyle = makeStyles((theme: Theme) =>
+const useUserMenuButtonStyle = makeStyles((theme: ITheme) =>
   createStyles({
     badge: {
       '&.online': {
@@ -59,9 +60,9 @@ const useUserMenuButtonStyle = makeStyles((theme: Theme) =>
       },
     },
     avatar: {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: theme.palette.info.lightBg,
       '& svg': {
-        color: theme.palette.primary.contrastText,
+        color: theme.palette.info.main,
         strokeWidth: 2,
         width: '60%',
       },

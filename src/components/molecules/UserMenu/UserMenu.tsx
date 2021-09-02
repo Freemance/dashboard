@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 // Icons
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Divider from '@material-ui/core/Divider';
 
 // Types
 import { IProps } from './type';
@@ -20,14 +21,15 @@ import useUserMenuStyles from './UserMenu.style';
 // import CustomRouterLink from '../../atoms/CustomRouterLink';
 import UserMenuButton from '../../molecules/UserMenuButton';
 import { NavLink } from 'react-router-dom';
-
-/* const CustomMenuItem: React.FC<IMenuItem> = (props: IMenuItem) => (
-  <MenuItem {...props} />
-); */
+import ThemeSwitcher from 'src/components/atoms/ThemeSwitcher';
+import { GlobalContext } from 'src/context';
 
 const UserMenu: React.FC<IProps> = ({ isOnline, onLogOut, user }: IProps) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const classes = useUserMenuStyles();
+
+  // Global Context
+  const { state } = React.useContext(GlobalContext);
 
   const handleClick = (event: React.FormEvent<EventTarget>): void => {
     setAnchorEl(event.currentTarget);
@@ -39,6 +41,11 @@ const UserMenu: React.FC<IProps> = ({ isOnline, onLogOut, user }: IProps) => {
   const handleLogOut = (event: React.FormEvent<EventTarget>): void => {
     event.persist();
     onLogOut();
+  };
+
+  const handleThemeChange = (): void => {
+    // dispatch()
+    console.log('Switchin theme');
   };
   return (
     <>
@@ -72,17 +79,28 @@ const UserMenu: React.FC<IProps> = ({ isOnline, onLogOut, user }: IProps) => {
           horizontal: 'right',
         }}
       >
+        <MenuItem>
+          <ListItemIcon className={classes.icon}>
+            <ThemeSwitcher onChange={handleThemeChange} />
+          </ListItemIcon>
+
+          <ListItemText
+            className={classes.itemText}
+            primary={state.system.theme}
+          />
+        </MenuItem>
+        <Divider />
         <MenuItem component={NavLink} to={`/account`}>
           <ListItemIcon className={classes.icon}>
             <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Perfil" />
+          <ListItemText className={classes.itemText} primary="Perfil" />
         </MenuItem>
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon className={classes.icon}>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary="Salir" />
+          <ListItemText className={classes.itemText} primary="Salir" />
         </MenuItem>
       </Menu>
     </>

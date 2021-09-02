@@ -1,13 +1,31 @@
-import React from 'react';
+import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { GlobalContext } from './context';
+import { CssBaseline } from '@material-ui/core';
 
-function App() {
+// Providers
+import { ThemeProvider } from '@material-ui/styles';
+import { SnackbarProvider } from 'notistack';
+
+import { theme } from 'src/styles/theme';
+import Routes from './Routes';
+import './utils/locales/i18n';
+
+export default function App() {
+  const { state } = React.useContext(GlobalContext);
+  console.log(state.system.theme);
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Freemance Dashboard</h1>
-      </header>
-    </div>
+    <ThemeProvider
+      theme={
+        state.system.theme === 'light' ? theme.lightTheme : theme.darkTheme
+      }
+    >
+      <SnackbarProvider maxSnack={1} preventDuplicate>
+        <CssBaseline />
+        <Router>
+          <Routes />
+        </Router>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 }
-
-export default App;
