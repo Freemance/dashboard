@@ -10,10 +10,14 @@ import MainLayout from 'src/components/layout/MainLayout';
 import Dashboard from 'src/views/Dashboard';
 import Freemancers from './views/Freemancers';
 import NotFound from 'src/views/NotFound';
+import Login from './views/Login/Login';
+import SimpleRouter from './components/routing/SimpleRouter';
+import Settings from './views/Settings';
 
 const Routes = () => (
   <Switch>
     <Redirect exact from="/" to="/dashboard" />
+    <SimpleRouter component={Login} exact path="/login" />
     <RouteWithLayout
       component={Dashboard}
       exact
@@ -25,6 +29,12 @@ const Routes = () => (
       exact
       layout={MainLayout}
       path="/freemancers"
+    />
+    <RouteWithLayout
+      component={Settings}
+      exact
+      layout={MainLayout}
+      path="/settings"
     />
     <RouteWithLayout
       component={NotFound}

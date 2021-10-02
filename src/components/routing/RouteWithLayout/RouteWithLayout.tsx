@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-// import { isAuthenticated } from 'src/utils/helpers';
+import { isAuthenticated } from 'src/utils/helpers/auth.helper';
 
 // Tyepes
 import { IProps } from './type';
-
-// Mock IsAuth
-const isAuthenticated = (): boolean => true;
 
 const RouteWithLayout: React.FC<IProps> = ({
   layout: Layout,
@@ -23,7 +20,7 @@ const RouteWithLayout: React.FC<IProps> = ({
             <Component {...matchProps} />
           </Layout>
         ) : (
-          <Redirect to="/sign-in" />
+          <Redirect to="/login" />
         )
       }
     />

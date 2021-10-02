@@ -1,3 +1,41 @@
 {
-  "Hello": "Hello"
+  "translation": {
+    "buttons": {
+      "Login": "Login",
+      "Create": "Create",
+      "Delete": "Delete",
+      "Edit": "Edit",
+      "Update": "Update",
+      "Clean": "Clean",
+      "Confirm": "Confirm",
+      "Cancel": "Cancel",
+      "Auth": "...authenticating"
+    },
+    "textfields": {
+      "Skill Name": "Skill Name",
+      "Tag Name": "Tag Name",
+      "Status": "Status",
+      "Aproved": "Aproved",
+      "Pending": "Pendind",
+      "Desappruved": "Desapruved",
+      "Need Fix": "Need Fix",
+      "Reviewing": "Reviewing"
+    },
+    "Notifications": {
+      "No connection": "No connection!",
+      "Reconnecting": "Reconnecting...",
+      "Connected": "Connected!",
+      "Loading": "Loading...",
+      "Skill created": "Skill created!",
+      "Skill removed": "Skill removed",
+      "Skill updated": "Skill updated",
+      "Tag created": "Tag created!",
+      "Tag removed": "Tag removed",
+      "Tag updated": "Tag updated",
+      "Profile Status updated": "Profile Status updated"
+    },
+    "dialogs": {
+      "Are you sure": "Are you sure?"
+    }
+  }
 }

@@ -1,7 +1,9 @@
-import * as React from 'react';
+import React from 'react';
+import { IconProps } from 'react-feather';
 
-// Types
-import { IProps } from './type';
+interface IProps {
+  icon: React.FunctionComponent<IconProps>;
+}
 
 const WrappIcon: React.FC<IProps> = ({ icon: Icon }: IProps) => <Icon />;
 

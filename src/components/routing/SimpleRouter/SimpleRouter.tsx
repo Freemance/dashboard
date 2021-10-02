@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-// import {isAuthenticated} from 'src/utils/helpers';
+import { isAuthenticated } from 'src/utils/helpers/auth.helper';
 
 // Types
 import { IProps } from './type';
-
-// Mock IsAuth
-const isAuthenticated = (): boolean => true;
 
 const SimpleRouter: React.FC<IProps> = ({
   component: Component,

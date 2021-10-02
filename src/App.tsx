@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { GlobalContext } from './context';
 import { CssBaseline } from '@material-ui/core';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 // Providers
 import { ThemeProvider } from '@material-ui/styles';
@@ -20,7 +21,7 @@ export default function App() {
         state.system.theme === 'light' ? theme.lightTheme : theme.darkTheme
       }
     >
-      <SnackbarProvider maxSnack={1} preventDuplicate>
+      <SnackbarProvider preventDuplicate>
         <CssBaseline />
         <Router>
           <Routes />

@@ -12,6 +12,7 @@ import useStyles from './MainLayout.style';
 
 // types
 import { ILayoutProps } from './types';
+import Wrapper from '../Wrapper';
 
 const MainLayout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
   const classes = useStyles();
@@ -33,25 +34,27 @@ const MainLayout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
   const shouldOpenSidebar: boolean = isDesktop ? true : openSidebar;
 
   return (
-    <div
-      className={clsx({
-        [classes.root]: true,
-        [classes.shiftContent]: isDesktop,
-      })}
-    >
-      <Topbar onSidebarOpen={handleSidebarOpen} />
-      <div className={classes.headerNavbarShadow} />
-      <SideBar
-        onClose={handleSidebarClose}
-        open={shouldOpenSidebar}
-        variant={isDesktop ? 'persistent' : 'temporary'}
-      />
+    <Wrapper>
+      <div
+        className={clsx({
+          [classes.root]: true,
+          [classes.shiftContent]: isDesktop,
+        })}
+      >
+        <Topbar onSidebarOpen={handleSidebarOpen} />
+        <div className={classes.headerNavbarShadow} />
+        <SideBar
+          onClose={handleSidebarClose}
+          open={shouldOpenSidebar}
+          variant={isDesktop ? 'persistent' : 'temporary'}
+        />
 
-      <main className={classes.content}>
-        {children}
-        <Footer />
-      </main>
-    </div>
+        <main className={classes.content}>
+          {children}
+          <Footer />
+        </main>
+      </div>
+    </Wrapper>
   );
 };
 

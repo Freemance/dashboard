@@ -1,16 +1,5 @@
-import { ReactNode } from 'react';
+import * as React from 'react';
 
-export type ActionMap<M extends { [index: string]: any }> = {
-  [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
-};
-
-export type IProps = {
-  children: ReactNode;
-};
+export interface IProps {
+  children: React.ReactNode;
+}

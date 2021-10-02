@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { TUserRole } from 'src/utils/types';
 import { MenuItemProps, Omit } from '@material-ui/core';
+import { AdminUserType } from 'src/context/state';
+import { UserRoleType } from 'type/globalTypes';
 
 export interface IProps {
   isOnline?: boolean | undefined;
@@ -8,10 +9,10 @@ export interface IProps {
   user?: IUser;
 }
 
-export interface IUser {
+export interface IUser extends AdminUserType {
   avatar?: string | undefined;
-  firstName?: string | undefined;
-  role?: TUserRole;
+  username: string | undefined;
+  role: UserRoleType;
 }
 
 export interface IMenuItem extends Omit<MenuItemProps, 'component' | 'button'> {

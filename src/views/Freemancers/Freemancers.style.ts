@@ -5,6 +5,7 @@ const useFreemancersStyles = makeStyles((theme: ITheme) =>
   createStyles({
     root: {
       padding: theme.spacing(4),
+      minHeight: '400px',
     },
   })
 );

@@ -1,10 +1,10 @@
 import { ElementType } from 'react';
 import { ButtonProps } from '@material-ui/core';
-import { TUserRole } from 'src/utils/types';
+import { UserRoleType } from 'type/globalTypes';
 
 export interface IProps extends ButtonProps {
   online: boolean;
-  userRole: TUserRole | '';
+  userRole: UserRoleType | '';
   userName?: string | undefined;
   userAvatar?: string | undefined;
   component?: ElementType;

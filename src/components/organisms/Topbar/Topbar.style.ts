@@ -18,6 +18,7 @@ const useTopbarStyles = makeStyles((theme: Theme) =>
       borderRadius: '.428rem',
       width: 'calc(100% - 4rem - 240px)',
       transition: 'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+      boxShadow: '0 4px 24px 0 rgb(34 41 47 / 10%) !important',
       [theme.breakpoints.down('md')]: {
         width: 'calc(100% - 4rem)',
       },

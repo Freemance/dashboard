@@ -5,8 +5,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-
 import MenuIcon from '@material-ui/icons/Menu';
+
+// Context
+import { GlobalContext } from 'src/context';
 
 // import NotificationMenu from '../../Molecules/NotificationMenu';
 import UserMenu from '../../molecules/UserMenu';
@@ -18,14 +20,9 @@ import useTopbarStyle from './Topbar.style';
 import { ITopbarProps } from './type';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 
-const mockUser = {
-  userRole: 'admin',
-  firstName: 'John',
-};
-
 const Topbar = ({ className, onSidebarOpen, ...rest }: ITopbarProps) => {
   const classes: ClassNameMap = useTopbarStyle();
-
+  const { state } = React.useContext(GlobalContext);
   return (
     <AppBar
       {...rest}
@@ -45,7 +42,7 @@ const Topbar = ({ className, onSidebarOpen, ...rest }: ITopbarProps) => {
 
         {/* <NotificationMenu />  */}
 
-        <UserMenu user={mockUser} isOnline={false} />
+        <UserMenu user={state.adminUser} isOnline={false} />
       </Toolbar>
     </AppBar>
   );

@@ -1,6 +1,42 @@
 {
   "translation": {
-    "You either tried some shady route or you came here by mistake.": "You either tried some shady route or you came here by mistake.",
-    "This page does not exist.": "404: This page doesn't exist."
+    "404": {
+      "You either tried some shady route or you came here by mistake.": "You either tried some shady route or you came here by mistake.",
+      "This page does not exist.": "404: This page doesn't exist."
+    },
+    "freemancer": {
+      "Profile": "Profile",
+      "Email": "Email",
+      "Username": "Username",
+      "State": "State",
+      "Register Date": "Register Date",
+      "Profile Status": "Profile Status",
+      "Slyk User": "Slyk User",
+      "Actived": "Actived",
+      "Status": "Status",
+      "Inactived": "Inactived",
+      "Role": "Role",
+      "Slyk": "Slyk",
+      "There is no freemances... yet.": "There's no freemances... yet."
+    },
+    "dashboard": {
+      "Dashboard": "Dashboard",
+      "StatisticsCard": {
+        "Statistics": "Statistics",
+        "Freemancers": "Total",
+        "Clients": "Clients",
+        "Aproved": "Approved",
+        "Connected": "Connected",
+        "Pending": "Pending"
+      }
+    },
+    "settings": {
+      "Define Skills": "Define skills",
+      "Settings": "Settings",
+      "Define Tags": "Define Tags"
+    },
+    "Login": {
+      "Freemance backoffice": "Freemance backoffice"
+    }
   }
 }
