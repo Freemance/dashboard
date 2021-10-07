@@ -13,6 +13,7 @@ import NotFound from 'src/views/NotFound';
 import Login from './views/Login/Login';
 import SimpleRouter from './components/routing/SimpleRouter';
 import Settings from './views/Settings';
+import FreemanceProfile from './views/FreemanceProfile';
 
 const Routes = () => (
   <Switch>
@@ -29,6 +30,12 @@ const Routes = () => (
       exact
       layout={MainLayout}
       path="/freemancers"
+    />
+    <RouteWithLayout
+      component={FreemanceProfile}
+      exact
+      layout={MainLayout}
+      path="/freemancers/:id"
     />
     <RouteWithLayout
       component={Settings}
