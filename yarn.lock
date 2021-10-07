@@ -1788,6 +1788,17 @@
   dependencies:
     "@babel/runtime" "^7.4.4"
 
+"@material-ui/lab@^4.0.0-alpha.60":
+  version "4.0.0-alpha.60"
+  resolved "https://registry.npmjs.org/@material-ui/lab/-/lab-4.0.0-alpha.60.tgz#5ad203aed5a8569b0f1753945a21a05efa2234d2"
+  integrity sha512-fadlYsPJF+0fx2lRuyqAuJj7hAS1tLDdIEEdov5jlrpb5pp4b+mRDUqQTUxi4inRZHS1bEXpU8QWUhO6xX88aA==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.11.2"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0 || ^17.0.0"
+
 "@material-ui/styles@^4.11.4":
   version "4.11.4"
   resolved "https://registry.npmjs.org/@material-ui/styles/-/styles-4.11.4.tgz#eb9dfccfcc2d208243d986457dff025497afa00d"
@@ -3865,6 +3876,13 @@ apexcharts@^3.27.3:
     svg.pathmorphing.js "^0.1.3"
     svg.resize.js "^1.4.3"
     svg.select.js "^3.0.1"
+
+apollo-link-jwt@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.npmjs.org/apollo-link-jwt/-/apollo-link-jwt-1.1.5.tgz#c2cc9cd1aa1b1672b0c286f82a8f103c47a74905"
+  integrity sha512-n2YTlWlpnEpA8yr6/XqwxbEEEYk6EDXJ5xs/00x9iumIZj0jkhpXqChJpymnPH5MkK0QbFAzikGqH2qJ5+GTIA==
+  dependencies:
+    jwt-decode "^2.2.0"
 
 apollo-link-token-refresh@^0.3.2:
   version "0.3.2"
@@ -9476,6 +9494,16 @@ junk@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/junk/-/junk-3.1.0.tgz#31499098d902b7e98c5d9b9c80f43457a88abfa1"
   integrity sha512-pBxcB3LFc8QVgdggvZWyeys+hnrNWg4OcZIU/1X59k5jQdLBlCsYGRQaz234SqoRLTCgMH00fY0xRJH+F9METQ==
+
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 killable@^1.0.1:
   version "1.0.1"

@@ -9,7 +9,14 @@
       "Clean": "Clean",
       "Confirm": "Confirm",
       "Cancel": "Cancel",
-      "Auth": "...authenticating"
+      "Auth": "...authenticating",
+      "Go to profile": "Go to profile"
+    },
+    "navigation": {
+      "Projects": "Projects",
+      "Eductaion": "Eductaion",
+      "Experience": "Experience",
+      "Skills": "Skills"
     },
     "textfields": {
       "Skill Name": "Skill Name",

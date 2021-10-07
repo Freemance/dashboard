@@ -53,8 +53,9 @@ const UserMenu: React.FC<IProps> = ({ isOnline, onLogOut, user }: IProps) => {
 
   const handleThemeChange = (): void => {
     dispatch(
-      toggleTheme(LocalStorage.get('theme') === 'light' ? 'light' : 'dark')
+      toggleTheme(LocalStorage.get('theme') === 'dark' ? 'light' : 'dark')
     );
+
     console.log('Switchin theme');
   };
 

@@ -60,7 +60,7 @@ const TagItem: React.FC<IProps> = ({
       {deleting && (
         <ListItemSecondaryAction>
           {!isDeleting ? (
-            <IconButton onClick={handleDelete}>
+            <IconButton onClick={handleDelete} className={classes.deleteButton}>
               <Trash2 color="error" />
             </IconButton>
           ) : (

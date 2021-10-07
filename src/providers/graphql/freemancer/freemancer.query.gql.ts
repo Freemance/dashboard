@@ -72,3 +72,64 @@ export const GET_PROFILES = gql`
     }
   }
 `;
+
+export const GET_PROFILE_BY_ID = gql`
+  query ProfilesByUsername($profileId: Int!) {
+    profileById(id: $profileId) {
+      id
+      avatar
+      firstName
+      lastName
+      jobTitle
+      slykUser
+      createdAt
+      bio
+      tag {
+        name
+      }
+      dateOfBirth
+      profileStatus
+      address
+      city
+      country
+      postalCode
+      skills {
+        id
+        icon
+        name
+      }
+      courses {
+        course
+        description
+        startDate
+        endDate
+        institution
+      }
+      phone
+      employmentHistory {
+        company
+        description
+        name
+        startDate
+        endDate
+        inProgress
+      }
+      languages {
+        language
+        lvl
+      }
+      portfolioItem {
+        proyect
+        description
+        screenshts
+        startDate
+        endDate
+        link
+        skills {
+          name
+          icon
+        }
+      }
+    }
+  }
+`;

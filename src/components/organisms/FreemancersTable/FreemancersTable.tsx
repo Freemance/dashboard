@@ -36,8 +36,9 @@ moment.locale('es');
 const FreemancersTable: React.FC = () => {
   // Global Context
   const { state, dispatch } = React.useContext(GlobalContext);
+  const [completed, setCompleted] = React.useState(false);
   const users: ProfileType[] = [];
-  const { loading, error, refetch } = useQuery(GET_PROFILES, {
+  const { loading, data, error, refetch } = useQuery(GET_PROFILES, {
     variables: {
       first: state.freemancersTable.rowsPerPage,
       direction: state.freemancersTable.order,
@@ -63,15 +64,32 @@ const FreemancersTable: React.FC = () => {
   if (error) {
     console.error('Ups some thinks go wrong!! ', error);
   }
+  // Handle data wen refetch
+  if (data && data.profileFilterForAdmin && !completed) {
+    const { edges, totalCount } = data.profileFilterForAdmin;
+    if (edges && edges.length > 0) {
+      edges.forEach((edge: ProfileEdge) => {
+        users.push(edge.node);
+        console.log(edge);
+      });
+      console.log('Users', users);
+      dispatch(getFreemancers(users, totalCount));
+      setCompleted(true);
+    }
+  }
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     dispatch(setPage(newPage));
     refetch({
       first: state.freemancersTable.rowsPerPage,
       direction: state.freemancersTable.order,
       sortField: state.freemancersTable.orderBy,
-      skip: state.freemancersTable.page * state.freemancersTable.rowsPerPage,
+      skip: newPage * state.freemancersTable.rowsPerPage,
     });
+    setCompleted(false);
   };
 
   const handleChangeRowsPerPage = (
@@ -84,6 +102,7 @@ const FreemancersTable: React.FC = () => {
       sortField: state.freemancersTable.orderBy,
       skip: state.freemancersTable.page * state.freemancersTable.rowsPerPage,
     });
+    setCompleted(false);
   };
 
   const handleStatusUpdate = () => {
@@ -93,6 +112,7 @@ const FreemancersTable: React.FC = () => {
       sortField: state.freemancersTable.orderBy,
       skip: state.freemancersTable.page * state.freemancersTable.rowsPerPage,
     });
+    setCompleted(false);
   };
   const { t } = useTranslation('views', { useSuspense: false });
   return (
@@ -103,7 +123,11 @@ const FreemancersTable: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell />
-                <TableCell sortDirection={state.freemancersTable.order}>
+                <TableCell
+                  sortDirection={
+                    state.freemancersTable.order === 'asc' ? 'desc' : 'asc'
+                  }
+                >
                   <Tooltip
                     enterDelay={300}
                     title={t('translation.freemancer.Username')}

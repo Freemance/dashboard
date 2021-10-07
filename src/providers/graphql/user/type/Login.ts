@@ -8,13 +8,13 @@
 // ====================================================
 
 export interface LoginUser {
-  __typename: "User";
+  __typename: 'User';
   username: string;
   role: string;
 }
 
 export interface LoginDashboard {
-  __typename: "Auth";
+  __typename: 'Auth';
   /**
    * JWT access token
    */
@@ -36,4 +36,15 @@ export interface Login {
 export interface LoginVariables {
   email: string;
   password: string;
+}
+
+export interface RefreshVariables {
+  token: string;
+}
+
+export interface RefreshResponse {
+  refreshToken: {
+    accessToken: string;
+    refreshToken: string;
+  };
 }

@@ -8,12 +8,12 @@
 // ====================================================
 
 export interface Skill_getSkillById_profiles_user {
-  __typename: "User";
+  __typename: 'User';
   username: string;
 }
 
 export interface Skill_getSkillById_profiles {
-  __typename: "Profile";
+  __typename: 'Profile';
   id: number;
   /**
    * Avatar name
@@ -34,7 +34,7 @@ export interface Skill_getSkillById_profiles {
 }
 
 export interface Skill_getSkillById {
-  __typename: "Skill";
+  __typename: 'Skill';
   id: number;
   /**
    * Skill name

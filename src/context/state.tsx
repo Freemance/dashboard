@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { User, Profile } from 'src/providers/graphql/freemancer/type/Profiles';
+import { ProfilesByIdProfile } from 'src/providers/graphql/freemancer/type/ProfilesByUsername';
 import { ProfileStatus, UserRoleType } from 'type/globalTypes';
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -27,6 +28,22 @@ export interface ProfileType extends Omit<Profile, 'profileStatus'> {
   updatedAt: string;
   slykUser: string;
   __typename: 'Profile';
+}
+
+export interface FullProfileType
+  extends Omit<ProfilesByIdProfile, 'profileStatus'> {
+  id: number;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  user: UserType;
+  profileStatus: ProfileStatus | string;
+  createdAt: string;
+  updatedAt: string;
+  slykUser: string;
+  __typename: 'Profile';
+  city: string;
+  country: string;
 }
 
 export interface UserType extends User {
@@ -90,17 +107,24 @@ export interface TableType {
   openPanel?: number | boolean;
 }
 
+export interface ProfilePanelType {
+  selectedPanel?: number;
+}
+
 export interface GlobalState {
   freemancers: ProfileType[] | null;
   currentFreemancer: ProfileType | null;
+  currentProfile: FullProfileType | null;
   adminUser: AdminUserType | null;
   freemancersTable: TableType;
   system: SystemType;
+  profilePanel: ProfilePanelType;
 }
 
 export const initialGlobalState: GlobalState = {
   freemancers: null,
   currentFreemancer: null,
+  currentProfile: null,
   freemancersTable: {
     totalCount: 0,
     rowsPerPage: 10,
@@ -134,5 +158,8 @@ export const initialGlobalState: GlobalState = {
       id: -1,
     },
     freemancersCount: 0,
+  },
+  profilePanel: {
+    selectedPanel: 1,
   },
 };

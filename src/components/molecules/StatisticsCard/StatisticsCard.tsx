@@ -21,7 +21,7 @@ const StatisticsCard: React.FC = () => {
       />
       <CardContent>
         <Grid container>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={3}>
             <IconInfoItem
               label={t('translation.dashboard.StatisticsCard.Freemancers')}
               data={state.system.stats.totalUsers}
@@ -29,7 +29,7 @@ const StatisticsCard: React.FC = () => {
               color="primary"
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={3}>
             <IconInfoItem
               label={t('translation.dashboard.StatisticsCard.Aproved')}
               data={state.system.stats.usersApproved}
@@ -37,7 +37,7 @@ const StatisticsCard: React.FC = () => {
               color="success"
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={3}>
             <IconInfoItem
               label={t('translation.dashboard.StatisticsCard.Pending')}
               data={state.system.stats.usersPending}
@@ -45,7 +45,7 @@ const StatisticsCard: React.FC = () => {
               color="error"
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={3}>
             <IconInfoItem
               label={t('translation.dashboard.StatisticsCard.Clients')}
               data={state.system.stats.totalCLients}

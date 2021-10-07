@@ -8,12 +8,12 @@
 // ====================================================
 
 export interface EditSkill_updateSkill_profiles_user {
-  __typename: "User";
+  __typename: 'User';
   username: string;
 }
 
 export interface EditSkill_updateSkill_profiles {
-  __typename: "Profile";
+  __typename: 'Profile';
   /**
    * User associated  to the profile
    */
@@ -33,7 +33,7 @@ export interface EditSkill_updateSkill_profiles {
 }
 
 export interface EditSkill_updateSkill {
-  __typename: "Skill";
+  __typename: 'Skill';
   /**
    * Identifies the date and time when the object was last updated.
    */

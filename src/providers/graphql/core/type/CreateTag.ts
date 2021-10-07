@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface CreateTag_createTag {
-  __typename: "Tag";
+  __typename: 'Tag';
   id: number;
   /**
    * Tag name

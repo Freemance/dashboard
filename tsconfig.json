@@ -18,7 +18,8 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "typeRoots": ["type", "node_modules/@types"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

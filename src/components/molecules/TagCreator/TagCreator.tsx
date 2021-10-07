@@ -41,10 +41,11 @@ const TagCreator: React.FC<IProps> = (props: IProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation(['views', 'common'], { useSuspense: false });
   const { state, dispatch } = React.useContext(GlobalContext);
+  const [completed, setCompleted] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const tags: TagType[] = [];
 
-  const { refetch, loading } = useQuery(GET_TAGS, {
+  const { refetch, data, loading } = useQuery(GET_TAGS, {
     variables: {
       first: 100,
       direction: 'asc',
@@ -58,7 +59,6 @@ const TagCreator: React.FC<IProps> = (props: IProps) => {
         edges &&
           edges.length &&
           edges.forEach((edge: TagEdge) => {
-            console.log(edge.node);
             tags.push({
               name: edge.node.name,
               id: edge.node.id,
@@ -71,54 +71,45 @@ const TagCreator: React.FC<IProps> = (props: IProps) => {
 
   // Add new tag
   const [addTag, { loading: loadingNew }] = useMutation(ADD_TAG, {
-    onCompleted: (payload) => {
+    onCompleted: async (payload) => {
       if (payload) {
         enqueueSnackbar(t('common:translation.Notifications.Tag created'), {
           variant: 'success',
           persist: false,
         });
         handleReset();
-        refetch({
-          first: 100,
-          direction: 'asc',
-          field: 'name',
-        });
+        await refetch();
+        setCompleted(false);
       }
     },
   });
 
   // Edit current tag
   const [editTag, { loading: loadingUpdate }] = useMutation(EDIT_TAG, {
-    onCompleted: (payload) => {
+    onCompleted: async (payload) => {
       if (payload) {
         enqueueSnackbar(t('common:translation.Notifications.Tag updated'), {
           variant: 'success',
           persist: false,
         });
         handleReset();
-        refetch({
-          first: 100,
-          direction: 'asc',
-          field: 'name',
-        });
+        await refetch();
+        setCompleted(false);
       }
     },
   });
 
   // Delate tag
   const [deleteTag, { loading: loadingDelete }] = useMutation(DELETE_TAG, {
-    onCompleted: (payload) => {
+    onCompleted: async (payload) => {
       if (payload) {
         enqueueSnackbar(t('common:translation.Notifications.Tag removed'), {
           variant: 'success',
           persist: false,
         });
         handleReset();
-        refetch({
-          first: 100,
-          direction: 'asc',
-          field: 'name',
-        });
+        await refetch();
+        setCompleted(false);
       }
     },
   });
@@ -149,7 +140,6 @@ const TagCreator: React.FC<IProps> = (props: IProps) => {
   };
 
   const handleReset = () => {
-    console.log('reseting');
     dispatch(
       setTag({
         name: '',
@@ -175,6 +165,22 @@ const TagCreator: React.FC<IProps> = (props: IProps) => {
           });
     }
   };
+
+  if (data && data.filterTags && !completed) {
+    const {
+      filterTags: { edges },
+    } = data;
+    edges &&
+      edges.length &&
+      edges.forEach((edge: TagEdge) => {
+        tags.push({
+          name: edge.node.name,
+          id: edge.node.id,
+        });
+        dispatch(getTags(tags));
+      });
+    setCompleted(true);
+  }
 
   return (
     <Card className={classes.root}>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
 import { getSkills, setSkill } from 'src/context/reducer';
 import { GlobalContext } from 'src/context';
-import { useLazyQuery, useMutation, NetworkStatus } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // Icons
@@ -43,32 +43,31 @@ const SkillCreator: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation(['views', 'common'], { useSuspense: false });
   const { state, dispatch } = React.useContext(GlobalContext);
+  const [initialState, setInitialState] = React.useState(true);
+  const [completed, setCompleted] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const skills: SkillType[] = [];
 
-  const [getAllSkills, { refetch, loading, networkStatus }] = useLazyQuery(
-    GET_SKILLS,
-    {
-      onCompleted: (data: Skills) => {
-        if (data) {
-          const {
-            filterSkills: { edges },
-          } = data;
-          edges &&
-            edges.length &&
-            edges.forEach((edge: SkillEdge) => {
-              console.log(edge.node);
-              skills.push({
-                name: edge.node.name,
-                icon: edge.node.icon,
-                id: edge.node.id,
-              });
-              dispatch(getSkills(skills));
+  const [getAllSkills, { refetch, data, loading }] = useLazyQuery(GET_SKILLS, {
+    onCompleted: (data: Skills) => {
+      const skills: SkillType[] = [];
+      if (data) {
+        const {
+          filterSkills: { edges },
+        } = data;
+        edges &&
+          edges.length &&
+          edges.forEach((edge: SkillEdge) => {
+            skills.push({
+              name: edge.node.name,
+              icon: edge.node.icon,
+              id: edge.node.id,
             });
-        }
-      },
-    }
-  );
+
+            dispatch(getSkills(skills));
+          });
+      }
+    },
+  });
 
   // Add new skill
   const [addSkill, { loading: loadingNew }] = useMutation(ADD_SKILL, {
@@ -80,6 +79,7 @@ const SkillCreator: React.FC = () => {
         });
         await refetch();
         handleReset();
+        setCompleted(false);
       }
     },
   });
@@ -94,6 +94,7 @@ const SkillCreator: React.FC = () => {
         });
         await refetch();
         handleReset();
+        setCompleted(false);
       }
     },
   });
@@ -102,12 +103,13 @@ const SkillCreator: React.FC = () => {
   const [deleteSkill, { loading: loadingDelete }] = useMutation(REMOVE_SKILL, {
     onCompleted: async (payload) => {
       if (payload) {
-        enqueueSnackbar(t('common:translation.Notifications.Tag removed'), {
+        enqueueSnackbar(t('common:translation.Notifications.Skill removed'), {
           variant: 'success',
           persist: false,
         });
         await refetch();
         handleReset();
+        setCompleted(false);
       }
     },
   });
@@ -141,10 +143,27 @@ const SkillCreator: React.FC = () => {
         skillId: id,
       },
     });
+    refetch();
   };
 
+  if (data && data.filterSkills && !completed) {
+    const skills: SkillType[] = [];
+    const {
+      filterSkills: { edges },
+    } = data;
+    edges &&
+      edges.length &&
+      edges.forEach((edge: SkillEdge) => {
+        skills.push({
+          name: edge.node.name,
+          icon: edge.node.icon,
+          id: edge.node.id,
+        });
+        dispatch(getSkills(skills));
+      });
+    setCompleted(true);
+  }
   const handleReset = () => {
-    console.log('reseting');
     dispatch(
       setSkill({
         name: '',
@@ -176,18 +195,18 @@ const SkillCreator: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getAllSkills({
-      variables: {
-        first: 100,
-        direction: 'asc',
-        filterField: 'name',
-      },
-    });
+    if (initialState) {
+      getAllSkills({
+        variables: {
+          first: 100,
+          direction: 'asc',
+          filterField: 'name',
+        },
+      });
+      setInitialState(false);
+    }
   }, [state.system.definedSkills]);
 
-  if (networkStatus === NetworkStatus.refetch) {
-    console.log('refetching');
-  }
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -201,7 +220,7 @@ const SkillCreator: React.FC = () => {
       />
       <CardContent>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} sm={6} md={5}>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -260,13 +279,13 @@ const SkillCreator: React.FC = () => {
               </Grid>
             </form>
           </Grid>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} sm={6} md={7}>
             <PerfectScrollbar>
               <List className={classes.skillList}>
                 {state.system.definedSkills.length > 0 &&
                   state.system.definedSkills.map((skill) => (
                     <SkillItem
-                      key={skill.id}
+                      key={`${skill.id}-${skill.name}`}
                       name={skill.name}
                       icon={skill.icon}
                       id={skill.id}

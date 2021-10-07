@@ -31,6 +31,11 @@ const useTagItemStyles = makeStyles((theme: ITheme) =>
         color: theme.palette.info.main,
       },
     },
+    deleteButton: {
+      '& svg': {
+        stroke: theme.palette.error.main,
+      },
+    },
   })
 );
 

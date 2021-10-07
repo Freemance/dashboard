@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface AddSkill_createSkill {
-  __typename: "Skill";
+  __typename: 'Skill';
   /**
    * Identifies the date and time when the object was created.
    */

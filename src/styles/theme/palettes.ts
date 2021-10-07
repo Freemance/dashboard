@@ -1,4 +1,3 @@
-import { colors } from '@material-ui/core';
 import { IPalette } from 'src/utils/types';
 
 const white = '#FFFFFF';
@@ -8,7 +7,6 @@ const black = '#000000';
  * Light colors palette
  */
 export const lightPalette: IPalette = {
-  type: 'light',
   black,
   white,
   primary: {
@@ -75,15 +73,12 @@ export const lightPalette: IPalette = {
     gradient:
       'linear-gradient(90deg, hsla(206, 78%, 98%, 1) 0%, hsla(204, 87%, 94%, 1) 0.2%, hsla(208, 88%, 97%, 1) 0.4%, hsla(200, 86%, 97%, 1) 0.6%, hsla(206, 78%, 98%, 1) 0.8%)',
   },
-
-  divider: colors.grey[200],
 };
 
 /**
  * Dark colors palette
  */
 export const darkPalette: IPalette = {
-  type: 'dark',
   black,
   white,
   primary: {
@@ -150,5 +145,4 @@ export const darkPalette: IPalette = {
     gradient:
       'linear-gradient(180deg,hsla(224,38%,14%,.94) 44%,hsla(224,38%,14%,.46) 73%,hsla(0,0%,14%,0))',
   },
-  divider: colors.blueGrey[900],
 };

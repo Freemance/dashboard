@@ -12,3 +12,12 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const GET_REFRESH_TOKEN = gql`
+  mutation RefreshToken($token: String!) {
+    refreshToken(token: $token) {
+      accessToken
+      refreshToken
+    }
+  }
+`;

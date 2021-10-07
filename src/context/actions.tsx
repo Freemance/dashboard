@@ -9,12 +9,15 @@ import {
   AdminUserType,
   StatsType,
   TagType,
+  FullProfileType,
+  ProfilePanelType,
 } from './state';
 
 export enum ActionType {
   SetStats,
   GetFreemancers,
   SetCurrentFreemancer,
+  SetCurrentProfile,
   SetFreemancerStatus,
   SetAdminUser,
   SetSkill,
@@ -27,6 +30,7 @@ export enum ActionType {
   SetPage,
   ChangeOrder,
   SetOpenPanel,
+  SetProfilePanelValues,
 }
 
 interface Action {
@@ -48,10 +52,24 @@ export interface GetFreemancers extends Action {
   };
 }
 
+export interface SetProfilePanelValues extends Action {
+  type: ActionType.SetProfilePanelValues;
+  payload: {
+    profilePanel: ProfilePanelType;
+  };
+}
+
 export interface SetCurrentFreemancer extends Action {
   type: ActionType.SetCurrentFreemancer;
   payload: {
     freemancer: ProfileType;
+  };
+}
+
+export interface SetCurrentProfile extends Action {
+  type: ActionType.SetCurrentProfile;
+  payload: {
+    profile: FullProfileType;
   };
 }
 
@@ -134,6 +152,7 @@ export type GlobalActions =
   | SetCurrentFreemancer
   | GetFreemancers
   | SetFreemancerStatus
+  | SetCurrentProfile
   | SetSkill
   | GetSkills
   | SetTag
@@ -144,5 +163,6 @@ export type GlobalActions =
   | SetPage
   | ChangeOrder
   | SetOpenPanel
+  | SetProfilePanelValues
   | SetAdminUser
   | SetStats;

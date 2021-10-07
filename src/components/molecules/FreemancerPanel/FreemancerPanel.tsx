@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { User, Check, Star, Globe } from 'react-feather';
+import { User, Check, Star, Globe, UserCheck } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
+import { NavLink } from 'react-router-dom';
 
 // Context
 import { GlobalContext } from 'src/context';
@@ -38,6 +39,7 @@ import CustomDialog from '../CustomDialog';
 import { useMutation } from '@apollo/client';
 import { UPDATE_STATUS } from 'src/providers/graphql/freemancer/freemancer.mutation.gql';
 import { ProfileStatus } from 'type/globalTypes';
+import WrappIcon from 'src/components/atoms/WrappIcon';
 
 const FreemancerPanel: React.FC<IProps> = ({
   user: { id: userId, username, email, active, createdAt, role },
@@ -108,7 +110,7 @@ const FreemancerPanel: React.FC<IProps> = ({
 
   return (
     <Card>
-      <CardHeader title={t('views:translation.freemancer.Profile')} />
+      <CardHeader title={t('views:translation.freemancer.Profile Preview')} />
       <CardContent>
         <Grid container spacing={8} justifyContent="space-between">
           <Grid item xs={12} md={6}>
@@ -122,7 +124,7 @@ const FreemancerPanel: React.FC<IProps> = ({
                     avatar &&
                     `${
                       process.env.REACT_APP_MEDIA_HOST ||
-                      'https://freemance-backend.herokuapp.com/uploads/'
+                      'https://api.freemancer.com/uploads/'
                     }150X150/${avatar}`
                   }
                 >
@@ -199,6 +201,18 @@ const FreemancerPanel: React.FC<IProps> = ({
                 }
               />
             </ListItem>
+            <ListItem>
+              <Button
+                className={classes.button}
+                component={NavLink}
+                to={`/freemancers/${profileId}`}
+              >
+                <div className={classes.icon}>
+                  <WrappIcon icon={() => <UserCheck />} />
+                </div>
+                {t('common:translation.buttons.Go to profile')}
+              </Button>
+            </ListItem>
           </Grid>
           <Grid item xs={12} md={6}>
             <List>
@@ -241,6 +255,7 @@ const FreemancerPanel: React.FC<IProps> = ({
                     <Link
                       href={slykUser && `https://${slykUser}/`}
                       target="__blank"
+                      rel="noreferrer noopener"
                     >
                       {slykUser}
                     </Link>

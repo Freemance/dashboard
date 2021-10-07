@@ -6,6 +6,8 @@ import {
   AdminUserType,
   StatsType,
   TagType,
+  FullProfileType,
+  ProfilePanelType,
 } from './state';
 import {
   ActionType,
@@ -15,17 +17,20 @@ import {
   SetFreemancerStatus,
   SetAdminUser,
   SetCurrentFreemancer,
+  SetCurrentProfile,
   SetSkill,
   GetSkills,
   SetPage,
   SetRowsPerPage,
   ChangeOrder,
   SetOpenPanel,
+  SetProfilePanelValues,
   SetStats,
   GetTags,
   SetTag,
 } from './actions';
 import { ProfileStatus } from 'type/globalTypes';
+import { LocalStorage } from 'src/services/LocalStorage/LocalStorage.service';
 
 export function globalReducer(
   state: GlobalState,
@@ -60,6 +65,14 @@ export function globalReducer(
           ...action.payload.freemancer,
         },
       };
+    case ActionType.SetCurrentProfile:
+      return {
+        ...state,
+        currentProfile: {
+          ...state.currentProfile,
+          ...action.payload.profile,
+        },
+      };
     case ActionType.SetFreemancerStatus:
       return {
         ...state,
@@ -68,12 +81,21 @@ export function globalReducer(
           profileStatus: action.payload.status,
         },
       };
+    case ActionType.SetProfilePanelValues:
+      return {
+        ...state,
+        profilePanel: {
+          ...state.profilePanel,
+          selectedPanel: action.payload.profilePanel.selectedPanel,
+        },
+      };
     case ActionType.SetAdminUser:
       return {
         ...state,
         adminUser: action.payload.adminUser,
       };
     case ActionType.SwitchTheme:
+      LocalStorage.set('theme', action.payload.theme);
       return {
         ...state,
         system: {
@@ -220,6 +242,15 @@ export const setCurrentFreemancer = (
   },
 });
 
+export const setCurrentProfile = (
+  profile: FullProfileType
+): SetCurrentProfile => ({
+  type: ActionType.SetCurrentProfile,
+  payload: {
+    profile,
+  },
+});
+
 export const setFreemancerStatus = (
   status: ProfileStatus
 ): SetFreemancerStatus => ({
@@ -261,5 +292,14 @@ export const setOpenPanel = (panelId: number | false): SetOpenPanel => ({
   type: ActionType.SetOpenPanel,
   payload: {
     panelId,
+  },
+});
+
+export const setProfilePanelValues = (
+  profilePanel: ProfilePanelType
+): SetProfilePanelValues => ({
+  type: ActionType.SetProfilePanelValues,
+  payload: {
+    profilePanel: profilePanel,
   },
 });

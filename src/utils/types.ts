@@ -40,6 +40,8 @@ export interface IPalette extends PaletteOptions {
 
 export interface IBackgroundColor extends Partial<TypeBackground> {
   gradient: string;
+  default?: string;
+  paper?: string;
 }
 
 export interface IPaletteColor extends PaletteColor {

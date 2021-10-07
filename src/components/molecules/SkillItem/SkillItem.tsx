@@ -61,6 +61,8 @@ const SkillItem: React.FC<IProps> = ({
       onClick={handleSelect}
       onMouseDown={handleDown}
       onMouseUp={handleUp}
+      onTouchStart={handleDown}
+      onTouchEnd={handleUp}
     >
       <ListItemIcon className={classes.skillIcon}>
         <Svgicon color="primary" paths={icon} />
@@ -69,8 +71,8 @@ const SkillItem: React.FC<IProps> = ({
       {deleting && (
         <ListItemSecondaryAction>
           {!isDeleting ? (
-            <IconButton onClick={handleDelete}>
-              <Trash2 color="error" />
+            <IconButton onClick={handleDelete} className={classes.deleteButton}>
+              <Trash2 />
             </IconButton>
           ) : (
             <div className={classes.progress}>

@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface UpdateTag_updateTag {
-  __typename: "Tag";
+  __typename: 'Tag';
   id: number;
   /**
    * Tag name

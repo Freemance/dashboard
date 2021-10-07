@@ -46,6 +46,19 @@ export enum ProfileStatusOptions {
   REVIEWING = 'REVIEWING',
 }
 
+export type LANLVL =
+  | 'A1'
+  | 'A2'
+  | 'B1'
+  | 'B2'
+  | 'C1'
+  | 'C2'
+  | 'GOOD_WORKING_KNOWLEDGE'
+  | 'HIGHLY_PROFICIENT'
+  | 'NATIVE_SPEAKER'
+  | 'VERY_GOOD_COMMAND'
+  | 'WORKING_KNOWLEDGE';
+
 export type ProfileStatus =
   | 'APPROVED'
   | 'DISAPPROVED'

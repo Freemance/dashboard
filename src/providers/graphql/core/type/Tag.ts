@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface Tag_tag {
-  __typename: "Tag";
+  __typename: 'Tag';
   id: number;
   /**
    * Tag name

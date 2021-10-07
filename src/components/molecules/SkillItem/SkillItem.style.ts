@@ -32,6 +32,11 @@ const useSkillItemStyles = makeStyles((theme: ITheme) =>
       },
     },
     skillIcon: {},
+    deleteButton: {
+      '& svg': {
+        stroke: theme.palette.error.main,
+      },
+    },
   })
 );
 
