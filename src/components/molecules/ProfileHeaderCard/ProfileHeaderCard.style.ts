@@ -20,6 +20,7 @@ const useProfileHeaderCardStyles = makeStyles((theme: ITheme) =>
       },
       '& .MuiListItemText-primary': {
         color: theme.palette.text.primary,
+        marginTop: theme.spacing(1),
         fontSize: '1.714rem',
         marginBottom: '.5rem',
         lineHeight: '1.2rem',
@@ -29,6 +30,7 @@ const useProfileHeaderCardStyles = makeStyles((theme: ITheme) =>
         color: theme.palette.text.secondary,
         lineHeight: '1.5rem',
         marginBottom: '1rem',
+        marginTop: theme.spacing(1),
         fontWeight: 400,
         fontSize: '1rem',
       },
@@ -60,11 +62,11 @@ const useProfileHeaderCardStyles = makeStyles((theme: ITheme) =>
     },
     avatar: {
       color: theme.palette.primary.main,
-      backgroundColor: theme.palette.primary.lightBg,
+      backgroundColor: theme.palette.primary.light,
       width: 120,
       height: 120,
       marginRight: theme.spacing(3),
-      border: `1px solid ${theme.palette.primary.main}`,
+      border: `1px solid ${theme.palette.primary.contrastText}`,
     },
     progress: {
       width: 18,

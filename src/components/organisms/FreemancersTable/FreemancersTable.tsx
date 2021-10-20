@@ -162,6 +162,7 @@ const FreemancersTable: React.FC = () => {
     filterType: 'checkbox',
     onRowClick: handleClick,
     elevation: 1,
+    selectableRowsHideCheckboxes: true,
   };
 
   return (

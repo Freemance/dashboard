@@ -134,7 +134,12 @@ const ProfileHeaderCard: React.FC<IProps> = ({
         </ListItem>
       </CardMedia>
       <CardActions>
-        <Grid container alignItems="center" justify="space-between" spacing={2}>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={2}
+        >
           <Grid item xs={12} md={8}>
             <Tabs
               value={state.profilePanel.selectedPanel}
@@ -163,7 +168,12 @@ const ProfileHeaderCard: React.FC<IProps> = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <form onSubmit={handleSubmit}>
-              <Grid container alignItems="center" justify="center" spacing={2}>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="center"
+                spacing={2}
+              >
                 <Grid item xs={8} sm={7}>
                   <TextField
                     fullWidth

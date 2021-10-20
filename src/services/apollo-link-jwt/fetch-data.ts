@@ -8,7 +8,7 @@ export const fetchData = async ({ apiUrl, headers, body }: FetchDataArgs) => {
       headers,
       body: JSON.stringify(body),
     });
-
+    console.log('response: ', response);
     return await response.json();
   } catch (e) {
     console.log(e);

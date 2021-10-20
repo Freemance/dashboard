@@ -6,8 +6,9 @@ import {
   NormalizedCacheObject,
   // ServerError,
   Observable,
+  ServerError,
 } from '@apollo/client';
-// import { ErrorResponse, onError } from '@apollo/client/link/error';
+import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { apolloLinkJWT } from 'src/services/apollo-link-jwt';
 import { LocalStorage } from 'src/services/LocalStorage/LocalStorage.service';
 // import { RefreshResponse } from './user/type/Login';
@@ -22,10 +23,11 @@ const httpLink = new HttpLink({
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
 });
 
-/* const errorLink = onError(
+const errorLink = onError(
   ({ graphQLErrors, networkError, response }: ErrorResponse) => {
     if (graphQLErrors) {
-      if (graphQLErrors[0].message === 'Unauthorized') {
+      console.log('GQLErrors: ', graphQLErrors);
+      if (graphQLErrors[0].extensions.code === 'UNAUTHENTICATED') {
         LocalStorage.remove('auth-token');
         LocalStorage.remove('refresh-token');
         console.log('Permisos Insuficientes');
@@ -38,7 +40,7 @@ const httpLink = new HttpLink({
       );
     }
     if (networkError) {
-      console.log(`[Network error]: ${networkError}`);
+      console.log('[Network error]:', networkError);
       if (networkError && (networkError as ServerError).statusCode === 401) {
         LocalStorage.remove('auth-token');
         LocalStorage.remove('refresh-token');
@@ -51,7 +53,7 @@ const httpLink = new HttpLink({
       console.log(response);
     }
   }
-); */
+);
 
 const authLink = new ApolloLink(
   (operation, forward) =>
@@ -61,10 +63,12 @@ const authLink = new ApolloLink(
         .then((operation) => {
           const authToken = LocalStorage.get('auth-token');
           if (authToken) {
-            operation.setContext({
-              headers: {
-                authorization: `bearer ${authToken}`,
-              },
+            operation.setContext(() => {
+              return {
+                headers: {
+                  authorization: `bearer ${authToken}`,
+                },
+              };
             });
           } // accessToken is defined
         }) // then operation ends here
@@ -93,8 +97,21 @@ const jwtLink = apolloLinkJWT({
 });
 
 const Client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  link: ApolloLink.from([jwtLink, authLink, httpLink]),
+  link: ApolloLink.from([jwtLink, errorLink, authLink, httpLink]),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-first',
+      errorPolicy: 'all',
+    },
+    query: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'all',
+    },
+    mutate: {
+      errorPolicy: 'all',
+    },
+  },
 });
 
 export default Client;
