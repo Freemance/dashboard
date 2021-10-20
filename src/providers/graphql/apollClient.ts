@@ -4,10 +4,10 @@ import {
   ApolloLink,
   InMemoryCache,
   NormalizedCacheObject,
-  ServerError,
+  // ServerError,
   Observable,
 } from '@apollo/client';
-import { ErrorResponse, onError } from '@apollo/client/link/error';
+// import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { apolloLinkJWT } from 'src/services/apollo-link-jwt';
 import { LocalStorage } from 'src/services/LocalStorage/LocalStorage.service';
 // import { RefreshResponse } from './user/type/Login';
@@ -22,15 +22,21 @@ const httpLink = new HttpLink({
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
 });
 
-const errorLink = onError(
+/* const errorLink = onError(
   ({ graphQLErrors, networkError, response }: ErrorResponse) => {
-    if (graphQLErrors)
+    if (graphQLErrors) {
+      if (graphQLErrors[0].message === 'Unauthorized') {
+        LocalStorage.remove('auth-token');
+        LocalStorage.remove('refresh-token');
+        console.log('Permisos Insuficientes');
+        window.location.reload();
+      }
       graphQLErrors.map(({ message, locations, path }) =>
         console.log(
           `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
         )
       );
-
+    }
     if (networkError) {
       console.log(`[Network error]: ${networkError}`);
       if (networkError && (networkError as ServerError).statusCode === 401) {
@@ -45,7 +51,7 @@ const errorLink = onError(
       console.log(response);
     }
   }
-);
+); */
 
 const authLink = new ApolloLink(
   (operation, forward) =>
@@ -83,11 +89,11 @@ const jwtLink = apolloLinkJWT({
   getTokens,
   fetchBody,
   onRefreshComplete,
-  debugMode: false,
+  debugMode: true,
 });
 
 const Client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  link: ApolloLink.from([authLink, errorLink, jwtLink, httpLink]),
+  link: ApolloLink.from([jwtLink, authLink, httpLink]),
   cache: new InMemoryCache(),
 });
 

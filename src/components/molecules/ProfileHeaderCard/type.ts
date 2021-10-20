@@ -5,4 +5,5 @@ export interface IProps {
   lastName?: string;
   jobTitle?: string;
   isLoading: boolean;
+  onRefetch: () => void;
 }

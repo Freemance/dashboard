@@ -3,14 +3,21 @@ import { ITheme } from 'src/utils/types';
 
 const useProfileHeaderCardStyles = makeStyles((theme: ITheme) =>
   createStyles({
-    root: {},
+    root: {
+      position: 'relative',
+    },
     header: {
       position: 'absolute',
       display: 'flex',
+      flexDirection: 'row',
       alignItems: 'center',
       bottom: '-2rem',
       left: '2.14rem',
       width: 'auto',
+      [theme.breakpoints.down('sm')]: {
+        position: 'relative',
+        flexDirection: 'column',
+      },
       '& .MuiListItemText-primary': {
         color: theme.palette.text.primary,
         fontSize: '1.714rem',
@@ -32,6 +39,9 @@ const useProfileHeaderCardStyles = makeStyles((theme: ITheme) =>
       position: 'relative',
     },
     profileNav: {
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: 0,
+      },
       marginLeft: '13.2rem',
       '& .MuiTabs-indicator': {
         display: 'none',
@@ -55,6 +65,15 @@ const useProfileHeaderCardStyles = makeStyles((theme: ITheme) =>
       height: 120,
       marginRight: theme.spacing(3),
       border: `1px solid ${theme.palette.primary.main}`,
+    },
+    progress: {
+      width: 18,
+      height: 18,
+      position: 'relative',
+      marginLeft: 5,
+      '& .MuiCircularProgress-root': {
+        color: theme.palette.info.main,
+      },
     },
   })
 );
