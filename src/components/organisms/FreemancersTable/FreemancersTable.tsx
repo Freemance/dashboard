@@ -1,49 +1,39 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-
-// MUI Components
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableContainer,
-  TableSortLabel,
-  TablePagination,
-  Paper,
-  Tooltip,
-  Hidden,
-} from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
 // Custom components
-import FreemancersTableRow from 'src/components/molecules/FreemancersTableRow';
 import { getFreemancers } from 'src/context/reducer';
-import TablePlaceholder from 'src/components/atoms/TablePlaceholder';
 
-// Types
+// Context
 import { GlobalContext } from 'src/context';
 import { useQuery } from '@apollo/client';
+
+// Type
+import { RowsData } from './type';
 import { GET_PROFILES } from 'src/providers/graphql/freemancer/freemancer.query.gql';
 import { ProfileType } from 'src/context/state';
 import { ProfileEdge } from 'src/providers/graphql/freemancer/type/Profiles';
+import MUIDataTable, { MUIDataTableOptions } from 'mui-datatables';
 
-// Context
-import { setRowsPerPage, setPage } from 'src/context/reducer';
 moment.locale('es');
 
 const FreemancersTable: React.FC = () => {
+  const freemancers: RowsData[] = [];
   // Global Context
   const { state, dispatch } = React.useContext(GlobalContext);
   const [completed, setCompleted] = React.useState(false);
+  const [values, setValues] = React.useState({
+    clicked: false,
+    redirectTo: null,
+  });
   const users: ProfileType[] = [];
-  const { loading, data, error, refetch } = useQuery(GET_PROFILES, {
+  const { data, error } = useQuery(GET_PROFILES, {
     variables: {
-      first: state.freemancersTable.rowsPerPage,
-      direction: state.freemancersTable.order,
+      first: 1000000,
+      direction: 'asc',
       sortField: state.freemancersTable.orderBy,
-      skip: state.freemancersTable.page * state.freemancersTable.rowsPerPage,
     },
     errorPolicy: 'all',
     onCompleted: (data) => {
@@ -78,118 +68,112 @@ const FreemancersTable: React.FC = () => {
     }
   }
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    dispatch(setPage(newPage));
-    refetch({
-      first: state.freemancersTable.rowsPerPage,
-      direction: state.freemancersTable.order,
-      sortField: state.freemancersTable.orderBy,
-      skip: newPage * state.freemancersTable.rowsPerPage,
-    });
-    setCompleted(false);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    dispatch(setRowsPerPage(+event.target.value));
-    refetch({
-      first: state.freemancersTable.rowsPerPage,
-      direction: state.freemancersTable.order,
-      sortField: state.freemancersTable.orderBy,
-      skip: state.freemancersTable.page * state.freemancersTable.rowsPerPage,
-    });
-    setCompleted(false);
-  };
-
-  const handleStatusUpdate = () => {
-    refetch({
-      first: state.freemancersTable.rowsPerPage,
-      direction: state.freemancersTable.order,
-      sortField: state.freemancersTable.orderBy,
-      skip: state.freemancersTable.page * state.freemancersTable.rowsPerPage,
-    });
-    setCompleted(false);
-  };
   const { t } = useTranslation('views', { useSuspense: false });
+
+  const columns = [
+    {
+      name: 'id',
+      label: 'Id',
+      options: {
+        filter: false,
+        sort: false,
+        display: false,
+        viewColumns: false,
+        print: false,
+      },
+    },
+
+    {
+      name: 'username',
+      label: t('translation.freemancer.Username'),
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'email',
+      label: t('translation.freemancer.Email'),
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'slykUser',
+      label: t('translation.freemancer.Slyk User'),
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'createdAt',
+      label: t('translation.freemancer.Register Date'),
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'active',
+      label: t('translation.freemancer.State'),
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'profileStatus',
+      label: t('translation.freemancer.Profile Status'),
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+  ];
+
+  // Freemance data
+  if (state.freemancers) {
+    state.freemancers.forEach((freemance) => {
+      freemancers.push({
+        id: freemance.id,
+        username: (freemance.user && freemance.user.username) || '',
+        email: (freemance.user && freemance.user.email) || '',
+        slykUser: freemance.slykUser || '',
+        createdAt: moment(freemance.createdAt).format('lll'),
+        active: freemance.user && freemance.user.active ? 'active' : 'inactive',
+        profileStatus: freemance.profileStatus,
+        ObjectData: freemance.id,
+      });
+    });
+  }
+  // Freemance data end
+
+  const handleClick = (rowMeta: any) => {
+    setValues((values) => ({
+      ...values,
+      clicked: true,
+      redirectTo: rowMeta[0],
+    }));
+  };
+
+  const options: MUIDataTableOptions = {
+    filterType: 'checkbox',
+    onRowClick: handleClick,
+    elevation: 1,
+  };
+
   return (
-    <TableContainer component={Paper}>
-      {state.freemancers && state.freemancers.length > 0 ? (
-        <>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell
-                  sortDirection={
-                    state.freemancersTable.order === 'asc' ? 'desc' : 'asc'
-                  }
-                >
-                  <Tooltip
-                    enterDelay={300}
-                    title={t('translation.freemancer.Username')}
-                  >
-                    <TableSortLabel active direction="desc">
-                      {t('translation.freemancer.Username')}
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <Hidden smDown>
-                  <TableCell align="center">
-                    {t('translation.freemancer.Email')}
-                  </TableCell>
-                  <TableCell align="center">
-                    {t('translation.freemancer.Slyk User')}
-                  </TableCell>
-                  <TableCell align="center">
-                    {t('translation.freemancer.Register Date')}
-                  </TableCell>
-                  <TableCell align="center">
-                    {t('translation.freemancer.State')}
-                  </TableCell>
-                </Hidden>
-                <TableCell align="center">
-                  {t('translation.freemancer.Profile Status')}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {state &&
-                state.freemancers &&
-                state.freemancers.length > 0 &&
-                state.freemancers.map((node) => (
-                  <FreemancersTableRow
-                    key={node.id}
-                    user={node.user}
-                    profile={node}
-                    onRefetch={handleStatusUpdate}
-                  />
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            count={state.freemancersTable.totalCount || 0}
-            component="div"
-            rowsPerPage={state.freemancersTable.rowsPerPage || 5}
-            page={state.freemancersTable.page || 0}
-            backIconButtonProps={{
-              'aria-label': 'previous page',
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'next page',
-            }}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </>
-      ) : (
-        <TablePlaceholder loading={loading} />
-      )}
-    </TableContainer>
+    <>
+      {values.clicked && <Redirect to={`/freemancers/${values.redirectTo}`} />}
+      <MUIDataTable
+        columns={columns}
+        data={freemancers}
+        options={options}
+        title={'LISTA DE CLIENTES'}
+      />
+    </>
   );
 };
 

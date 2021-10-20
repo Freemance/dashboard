@@ -28,7 +28,7 @@ const Freemancers: React.FC<IProps> = () => {
       >
         <Grid item xs={12}>
           <TextIcon
-            label={t('translation.dashboard.Dashboard')}
+            label={t('translation.freemancers.Freemancers')}
             icon={<UserCheck size={18} />}
             color="secondary"
             variant="rounded"

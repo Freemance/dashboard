@@ -16,7 +16,7 @@ import useFreemanceProfileStyles from './FreemanceProfile.state';
 import { IProps } from './type';
 import { GET_PROFILE_BY_ID } from 'src/providers/graphql/freemancer/freemancer.query.gql';
 import { FullProfileType } from 'src/context/state';
-import { setCurrentProfile } from 'src/context/reducer';
+import { setCurrentFreemancer, setCurrentProfile } from 'src/context/reducer';
 import ProfileInfoCard from 'src/components/molecules/ProfileInfoCard';
 import { Redirect } from 'react-router-dom';
 import ProfileMainCard from 'src/components/molecules/ProfileMainCard';
@@ -28,15 +28,19 @@ const FreemanceProfile: React.FC<IProps> = ({ match }: IProps) => {
 
   const profileId = parseInt(match.params.id);
   let profile: FullProfileType;
-  const [getProfileById, { loading, error }] = useLazyQuery(GET_PROFILE_BY_ID, {
-    onCompleted: (data) => {
-      if (data && data.profileById) {
-        profile = data.profileById;
-        console.log('data ', profile);
-        dispatch(setCurrentProfile(profile));
-      }
-    },
-  });
+  const [getProfileById, { loading, error, refetch }] = useLazyQuery(
+    GET_PROFILE_BY_ID,
+    {
+      onCompleted: (data) => {
+        if (data && data.profileById) {
+          profile = data.profileById;
+          console.log('data ', profile);
+          dispatch(setCurrentProfile(profile));
+          dispatch(setCurrentFreemancer(profile));
+        }
+      },
+    }
+  );
 
   React.useEffect(() => {
     if (!isNaN(profileId)) {
@@ -81,6 +85,7 @@ const FreemanceProfile: React.FC<IProps> = ({ match }: IProps) => {
                 poster=""
                 avatar={state.currentProfile && state.currentProfile.avatar}
                 jobTitle={state.currentProfile && state.currentProfile.jobTitle}
+                onRefetch={refetch}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
