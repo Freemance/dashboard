@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 // MUI Components
-import { List, ListItem, Button } from '@material-ui/core';
+import { List, ListItem, Button, Badge } from '@material-ui/core';
 
 // Custom atoms
 import WrappIcon from 'src/components/atoms/WrappIcon';
@@ -29,15 +29,24 @@ const SideBarNav: React.FC<IProps> = ({
       {pages.map(({ title, icon, href }: ISideBarLink) => (
         <ListItem className={classes.item} disableGutters key={title}>
           <Button
+            disabled={title === 'Clients'}
             activeClassName={classes.active}
             className={classes.button}
             component={NavLink}
             to={href}
           >
-            <div className={classes.icon}>
-              <WrappIcon icon={icon} />
-            </div>
-            {t`translation.sidebar.${title}`}
+            <Badge
+              color="secondary"
+              invisible={title !== 'Clients'}
+              badgeContent="soon"
+              style={{ marginLeft: 10 }}
+              classes={{ badge: classes.newsNotif }}
+            >
+              <div className={classes.icon}>
+                <WrappIcon icon={icon} />
+              </div>
+              {t`translation.sidebar.${title}`}
+            </Badge>
           </Button>
         </ListItem>
       ))}

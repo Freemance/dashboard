@@ -54,6 +54,12 @@ const useSideBarNavStyles = makeStyles((theme: ITheme) =>
         color: theme.palette.info.dark,
       },
     },
+    newsNotif: {
+      backgroundColor: theme.palette.error.lightBg,
+      color: theme.palette.error.main,
+      right: -41,
+      top: '40%',
+    },
   })
 );
 

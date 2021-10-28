@@ -23,7 +23,7 @@ const IconInfoItem: React.FC<IProps> = ({
   const classes = useIconInfoItemStyles({ color });
   return (
     <ListItem>
-      {!data ? (
+      {!data && data != 0 ? (
         <Skeleton variant="circle" width={48} height={48} />
       ) : (
         <ListItemAvatar>
@@ -38,14 +38,16 @@ const IconInfoItem: React.FC<IProps> = ({
       <ListItemText
         primary={
           !data ? (
-            <Skeleton height={6} width="50%" />
+            <Skeleton height={24} width="50%" />
           ) : (
             <Typography className={classes.dataText} variant="h4">
               {data}
             </Typography>
           )
         }
-        secondary={!data ? <Skeleton height={6} width="40%" /> : label}
+        secondary={
+          !data && data != 0 ? <Skeleton height={16} width="40%" /> : label
+        }
       />
     </ListItem>
   );
