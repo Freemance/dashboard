@@ -19,6 +19,7 @@ export enum ActionType {
   SetCurrentFreemancer,
   SetCurrentProfile,
   SetFreemancerStatus,
+  SetFreemancerActive,
   SetAdminUser,
   SetSkill,
   GetSkills,
@@ -83,6 +84,11 @@ export interface SetAdminUser extends Action {
 export interface SetFreemancerStatus extends Action {
   type: ActionType.SetFreemancerStatus;
   payload: { status: ProfileStatus };
+}
+
+export interface SetFreemancerActive extends Action {
+  type: ActionType.SetFreemancerActive;
+  payload: { active: boolean };
 }
 
 export interface SetSkill extends Action {
@@ -152,6 +158,7 @@ export type GlobalActions =
   | SetCurrentFreemancer
   | GetFreemancers
   | SetFreemancerStatus
+  | SetFreemancerActive
   | SetCurrentProfile
   | SetSkill
   | GetSkills

@@ -8,3 +8,12 @@ export const UPDATE_STATUS = gql`
     }
   }
 `;
+
+export const UPDATE_ACTIVE_STATUS = gql`
+  mutation updateActiveStatus($id: Int!, $active: Boolean!) {
+    updateActiveStatus(id: $id, active: $active) {
+      id
+      active
+    }
+  }
+`;

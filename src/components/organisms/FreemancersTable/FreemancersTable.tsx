@@ -172,7 +172,7 @@ const FreemancersTable: React.FC = () => {
         columns={columns}
         data={freemancers}
         options={options}
-        title={'LISTA DE CLIENTES'}
+        title={t('translation.freemancers.Freemancers')}
       />
     </>
   );

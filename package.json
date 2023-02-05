@@ -58,8 +58,7 @@
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write .",
-    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
-    "prepare": "husky install"
+    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -100,7 +99,6 @@
     "@types/mui-datatables": "^3.7.6",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
-    "husky": "^7.0.0",
     "prettier": "^2.3.2"
   },
   "resolutions": {
