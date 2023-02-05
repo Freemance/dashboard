@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { setFreemancerStatus } from 'src/context/reducer';
+import { setFreemancerActive, setFreemancerStatus } from 'src/context/reducer';
 // Mui Components
 import {
   Card,
@@ -16,6 +16,8 @@ import {
   Grid,
   Button,
   CircularProgress,
+  FormControlLabel,
+  Switch,
 } from '@material-ui/core';
 
 // Styles
@@ -28,7 +30,10 @@ import { setProfilePanelValues } from 'src/context/reducer';
 import { PROFILE_STATUS } from 'src/utils/constants/commons';
 import { StatusOptionType } from '../FreemancerPanel/type';
 import { ProfileStatus } from 'type/globalTypes';
-import { UPDATE_STATUS } from 'src/providers/graphql/freemancer/freemancer.mutation.gql';
+import {
+  UPDATE_STATUS,
+  UPDATE_ACTIVE_STATUS,
+} from 'src/providers/graphql/freemancer/freemancer.mutation.gql';
 import { useMutation } from '@apollo/client';
 import { useSnackbar } from 'notistack';
 import CustomDialog from '../CustomDialog';
@@ -60,6 +65,25 @@ const ProfileHeaderCard: React.FC<IProps> = ({
       }
     },
   });
+
+  const [updateActive, { loading: loadingActive }] = useMutation(
+    UPDATE_ACTIVE_STATUS,
+    {
+      onCompleted: (data) => {
+        if (data) {
+          enqueueSnackbar(
+            t('translation.Notifications.Profile Status updated'),
+            {
+              variant: 'success',
+              persist: false,
+            }
+          );
+          dispatch(setFreemancerActive(data.updateActiveStatus.active));
+          onRefetch();
+        }
+      },
+    }
+  );
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     dispatch(
@@ -140,7 +164,7 @@ const ProfileHeaderCard: React.FC<IProps> = ({
           justifyContent="space-between"
           spacing={2}
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={7}>
             <Tabs
               value={state.profilePanel.selectedPanel}
               indicatorColor="primary"
@@ -166,7 +190,7 @@ const ProfileHeaderCard: React.FC<IProps> = ({
               />
             </Tabs>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={5}>
             <form onSubmit={handleSubmit}>
               <Grid
                 container
@@ -174,7 +198,31 @@ const ProfileHeaderCard: React.FC<IProps> = ({
                 justifyContent="center"
                 spacing={2}
               >
-                <Grid item xs={8} sm={7}>
+                <Grid item xs={12} sm={3}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={
+                          state.currentFreemancer
+                            ? state.currentFreemancer.user.active
+                            : false
+                        }
+                        disabled={loadingActive || loading || isLoading}
+                        onChange={() => {
+                          updateActive({
+                            variables: {
+                              id: state.currentFreemancer.user.id,
+                              active: !state.currentFreemancer.user.active,
+                            },
+                          });
+                        }}
+                        color="primary"
+                      />
+                    }
+                    label="Active"
+                  />
+                </Grid>
+                <Grid item xs={8} sm={5}>
                   <TextField
                     fullWidth
                     label={t('translation.textfields.Status')}
@@ -203,11 +251,11 @@ const ProfileHeaderCard: React.FC<IProps> = ({
                   <Button
                     variant="contained"
                     color="primary"
-                    disabled={loading}
+                    disabled={loading || loadingActive}
                     type="submit"
                     fullWidth
                   >
-                    {!loading ? (
+                    {!loading && !loadingActive ? (
                       t('translation.buttons.Update')
                     ) : (
                       <div className={classes.progress}>

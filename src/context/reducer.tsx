@@ -28,6 +28,7 @@ import {
   SetStats,
   GetTags,
   SetTag,
+  SetFreemancerActive,
 } from './actions';
 import { ProfileStatus } from 'type/globalTypes';
 import { LocalStorage } from 'src/services/LocalStorage/LocalStorage.service';
@@ -79,6 +80,17 @@ export function globalReducer(
         currentFreemancer: {
           ...state.currentFreemancer,
           profileStatus: action.payload.status,
+        },
+      };
+    case ActionType.SetFreemancerActive:
+      return {
+        ...state,
+        currentFreemancer: {
+          ...state.currentFreemancer,
+          user: {
+            ...state.currentFreemancer.user,
+            active: action.payload.active,
+          },
         },
       };
     case ActionType.SetProfilePanelValues:
@@ -257,6 +269,15 @@ export const setFreemancerStatus = (
   type: ActionType.SetFreemancerStatus,
   payload: {
     status,
+  },
+});
+
+export const setFreemancerActive = (
+  active: boolean
+): SetFreemancerActive => ({
+  type: ActionType.SetFreemancerActive,
+  payload: {
+    active,
   },
 });
 

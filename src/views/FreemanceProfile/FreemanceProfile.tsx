@@ -14,7 +14,9 @@ import TextIcon from 'src/components/atoms/TextIcon';
 import useFreemanceProfileStyles from './FreemanceProfile.state';
 
 import { IProps } from './type';
-import { GET_PROFILE_BY_ID } from 'src/providers/graphql/freemancer/freemancer.query.gql';
+import {
+  GET_PROFILE_BY_ID,
+} from 'src/providers/graphql/freemancer/freemancer.query.gql';
 import { FullProfileType } from 'src/context/state';
 import { setCurrentFreemancer, setCurrentProfile } from 'src/context/reducer';
 import ProfileInfoCard from 'src/components/molecules/ProfileInfoCard';
@@ -28,6 +30,7 @@ const FreemanceProfile: React.FC<IProps> = ({ match }: IProps) => {
 
   const profileId = parseInt(match.params.id);
   let profile: FullProfileType;
+
   const [getProfileById, { loading, error, refetch }] = useLazyQuery(
     GET_PROFILE_BY_ID,
     {

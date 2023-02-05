@@ -62,7 +62,16 @@ const FreemancerPanel: React.FC<IProps> = ({
   } = profile;
   React.useEffect(() => {
     if (userId && profileId) {
-      dispatch(setCurrentFreemancer(profile));
+      dispatch(
+        setCurrentFreemancer({
+          ...profile,
+          user: {
+            ...profile.user,
+            id: userId,
+            active: active,
+          },
+        })
+      );
     }
     return () => {
       // cleanup
